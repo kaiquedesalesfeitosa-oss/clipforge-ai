@@ -29,6 +29,6 @@
   <!-- selo -->
   <g transform="translate(430,490)">
     <rect width="340" height="48" rx="24" fill="#7c3aed" fill-opacity="0.2" stroke="#8b5cf6" stroke-width="2"/>
-    <text x="170" y="31" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#c4b5fd">✨ Pronto para viralizar</text>
+    <text x="170" y="31" text-anchor="middle" font-family="Inter, Arial, Helvetica, sans-serif" font-size="20" font-weight="700" fill="#c4b5fd">Pronto para viralizar</text>
   </g>
 </svg>
