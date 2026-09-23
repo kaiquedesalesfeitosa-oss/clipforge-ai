@@ -3,13 +3,19 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>ClipForge AI — Cortes Virais com IA</title>
+<title>ClipForge AI — Cortes Virais, AI Music, B-Roll e Edição com IA</title>
+<meta name="description" content="ClipForge AI transforma vídeos longos em cortes virais 9:16 com legendas, tradução, AI Music + Sound Design, AI B-Roll Generator e muito mais — tudo com inteligência artificial.">
+<meta name="theme-color" content="#050507">
+<meta property="og:title" content="ClipForge AI — A suíte de edição com IA para criadores">
+<meta property="og:description" content="Cortes virais, AI Music + Sound Design, AI B-Roll Generator, legendas, dublagem e muito mais.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%237c3aed'/%3E%3Cpath d='M10 8h12v16H10z' fill='none' stroke='white' stroke-width='2'/%3E%3Cpath d='M10 12h12M10 20h12' stroke='white' stroke-width='2'/%3E%3C/svg%3E">
 <script src="https://cdn.tailwindcss.com"></script>
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://www.youtube.com/iframe_api"></script>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <script>
-tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']},colors:{brand:{50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed',700:'#6d28d9',800:'#5b21b6',900:'#4c1d95'}}}}}
+if(typeof tailwind!=='undefined'){tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{sans:['Inter','sans-serif']},colors:{brand:{50:'#f5f3ff',100:'#ede9fe',200:'#ddd6fe',300:'#c4b5fd',400:'#a78bfa',500:'#8b5cf6',600:'#7c3aed',700:'#6d28d9',800:'#5b21b6',900:'#4c1d95'}}}}}}
 </script>
 <style>
 body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
@@ -22,22 +28,42 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
 @keyframes pulse-g{0%,100%{opacity:.4}50%{opacity:.8}}
 .pulse-g{animation:pulse-g 3s ease-in-out infinite}
+@keyframes eq{0%,100%{transform:scaleY(.25)}50%{transform:scaleY(1)}}
+.eq span{display:block;width:3px;border-radius:99px;background:linear-gradient(180deg,#a78bfa,#38bdf8);transform-origin:center;animation:eq 1s ease-in-out infinite}
+.tab-active{background:rgba(124,58,237,.2)!important;border-color:rgba(139,92,246,.5)!important;color:#c4b5fd!important}
+.chip{border:1px solid #27272a;background:#18181b;color:#a1a1aa;padding:.3rem .65rem;border-radius:999px;font-size:10px;font-weight:600;cursor:pointer;transition:.15s}
+.chip:hover{border-color:#52525b;color:#fff}
+.chip.on{background:rgba(124,58,237,.25);border-color:#8b5cf6;color:#c4b5fd}
+.wave{display:flex;align-items:center;gap:2px;height:34px}
+.wave i{display:block;width:3px;border-radius:99px;background:linear-gradient(180deg,#a78bfa,#38bdf8);opacity:.85}
+.thumb{background-size:cover;background-position:center;position:relative;overflow:hidden}
+.thumb-1{background-image:linear-gradient(135deg,#312e81,#7c3aed)}
+.thumb-2{background-image:linear-gradient(135deg,#0e7490,#2563eb)}
+.thumb-3{background-image:linear-gradient(135deg,#9d174d,#f59e0b)}
+.thumb-4{background-image:linear-gradient(135deg,#065f46,#84cc16)}
+.thumb-5{background-image:linear-gradient(135deg,#1e3a8a,#db2777)}
+.thumb-6{background-image:linear-gradient(135deg,#78350f,#ef4444)}
+input[type=text],input[type=email]{outline:none}
 ::-webkit-scrollbar{width:5px}::-webkit-scrollbar-track{background:#0a0a0f}::-webkit-scrollbar-thumb{background:#27272a;border-radius:99px}
 </style>
 </head>
 <body class="min-h-screen font-sans antialiased">
 
+<!-- ===== TOAST ===== -->
+<div id="toastWrap" class="fixed bottom-4 right-4 z-[100] space-y-2"></div>
+
 <!-- ===== NAVBAR ===== -->
 <nav id="nav" class="sticky top-0 z-50 border-b border-white/5 bg-[#050507]/80 backdrop-blur-xl">
 <div class="max-w-6xl mx-auto px-4 h-14 flex items-center justify-between">
-<a href="#" onclick="showPage('home')" class="flex items-center gap-2">
+<a href="#" onclick="showPage('home');return false" class="flex items-center gap-2">
 <div class="bg-brand-600/20 border border-brand-500/30 p-1.5 rounded-xl text-brand-400"><i data-lucide="clapperboard" class="w-4 h-4"></i></div>
 <span class="font-extrabold text-sm">Clip<span class="gt">Forge</span></span>
 </a>
 <div id="navLinks" class="hidden md:flex items-center gap-6 text-xs text-zinc-400">
-<a href="#" onclick="showPage('home')" class="hover:text-white transition">Início</a>
-<a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('features')?.scrollIntoView({behavior:'smooth'}),100)" class="hover:text-white transition">Recursos</a>
-<a href="#" onclick="showPage('home');setTimeout(()=>document.getElementById('pricing')?.scrollIntoView({behavior:'smooth'}),100)" class="hover:text-white transition">Preços</a>
+<a href="#" onclick="navTo('home','features');return false" class="hover:text-white transition">Recursos</a>
+<a href="#" onclick="navTo('home','tools');return false" class="hover:text-white transition">Ferramentas IA</a>
+<a href="#" onclick="navTo('home','how');return false" class="hover:text-white transition">Como funciona</a>
+<a href="#" onclick="navTo('home','pricing');return false" class="hover:text-white transition">Preços</a>
 </div>
 <div id="navAuth" class="flex items-center gap-2">
 <button onclick="showPage('login')" class="text-xs text-zinc-400 hover:text-white px-3 py-1.5 rounded-lg transition">Entrar</button>
@@ -46,36 +72,130 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 <div id="navUser" class="hidden items-center gap-2">
 <span class="text-xs text-zinc-400 hidden sm:inline" id="userName">Olá, Criador</span>
 <button onclick="showPage('dash')" class="text-xs bg-brand-600/20 text-brand-300 border border-brand-500/30 font-semibold px-3 py-1.5 rounded-lg">Dashboard</button>
-<button onclick="logout()" class="text-xs text-zinc-500 hover:text-white px-2 py-1.5 rounded-lg"><i data-lucide="log-out" class="w-3.5 h-3.5"></i></button>
+<button onclick="logout()" class="text-xs text-zinc-500 hover:text-white px-2 py-1.5 rounded-lg" title="Sair"><i data-lucide="log-out" class="w-3.5 h-3.5"></i></button>
 </div>
 </div>
 </nav>
 
 <!-- ===== PAGE: HOME ===== -->
 <div id="page-home" class="page">
+
 <!-- Hero -->
 <section class="relative overflow-hidden">
 <div class="absolute inset-0 -z-10"><div class="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[500px] bg-brand-600/10 rounded-full blur-[120px] pulse-g"></div></div>
 <div class="max-w-4xl mx-auto px-4 pt-16 pb-12 text-center">
-<div class="inline-flex items-center gap-1.5 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-brand-300 text-xs font-semibold mb-5"><i data-lucide="sparkles" class="w-3 h-3"></i> IA para Criadores de Conteúdo</div>
+<div class="inline-flex items-center gap-1.5 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-brand-300 text-xs font-semibold mb-5"><i data-lucide="sparkles" class="w-3 h-3"></i> A suíte de IA de edição mais completa para criadores</div>
 <h1 class="text-3xl sm:text-5xl md:text-6xl font-black tracking-tight leading-[1.08]">Transforme vídeos longos em <span class="gt">cortes virais</span></h1>
-<p class="mt-4 text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">A IA encontra os melhores momentos, gera cortes em 9:16, adiciona legendas e traduz para vários idiomas — tudo em minutos.</p>
+<p class="mt-4 text-zinc-400 text-sm sm:text-base max-w-xl mx-auto leading-relaxed">A IA encontra os melhores momentos, gera cortes 9:16, legendas, tradução, <b class="text-zinc-200">AI Music + Sound Design</b> e <b class="text-zinc-200">AI B-Roll</b> — tudo em minutos.</p>
 <div class="mt-7 flex flex-col sm:flex-row gap-3 justify-center">
 <button onclick="showPage('login')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm px-7 py-3 rounded-xl shadow-xl shadow-brand-600/25 active:scale-95 transition flex items-center justify-center gap-2"><i data-lucide="zap" class="w-4 h-4"></i> Criar Meu Primeiro Corte</button>
 <button onclick="document.getElementById('how')?.scrollIntoView({behavior:'smooth'})" class="border border-zinc-800 text-zinc-300 hover:text-white font-semibold text-sm px-7 py-3 rounded-xl transition flex items-center justify-center gap-2"><i data-lucide="play" class="w-4 h-4"></i> Como Funciona</button>
 </div>
 <p class="mt-4 text-xs text-zinc-500">Grátis para começar · Sem cartão · 100 créditos iniciais</p>
+<div class="mt-8 flex flex-wrap items-center justify-center gap-x-6 gap-y-2 text-[11px] text-zinc-500">
+<span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Legendas em 40+ idiomas</span>
+<span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Biblioteca stock 4M+ clips</span>
+<span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Música e SFX com IA</span>
+<span class="flex items-center gap-1"><i data-lucide="check" class="w-3 h-3 text-emerald-400"></i> Exportação HD sem marca d'água</span>
+</div>
+</div>
+</section>
+
+<!-- Stats bar -->
+<section class="border-t border-white/5 bg-zinc-950/50">
+<div class="max-w-5xl mx-auto px-4 py-6 grid grid-cols-2 sm:grid-cols-4 gap-4 text-center">
+<div><p class="text-2xl font-black gt">2.4M+</p><p class="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">Cortes gerados</p></div>
+<div><p class="text-2xl font-black gt">180+</p><p class="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">Países usando</p></div>
+<div><p class="text-2xl font-black gt">4M+</p><p class="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">Clips de B-Roll</p></div>
+<div><p class="text-2xl font-black gt">12x</p><p class="text-[10px] text-zinc-500 uppercase tracking-wider mt-0.5">Mais rápido que editar à mão</p></div>
 </div>
 </section>
 
 <!-- How it works -->
 <section id="how" class="py-16 border-t border-white/5">
 <div class="max-w-5xl mx-auto px-4">
-<h2 class="text-2xl sm:text-3xl font-bold text-center mb-10">Como funciona</h2>
+<h2 class="text-2xl sm:text-3xl font-bold text-center mb-3">Como funciona</h2>
+<p class="text-center text-zinc-400 text-sm mb-10 max-w-lg mx-auto">Do link bruto ao vídeo pronto para publicar — em 3 passos.</p>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="link-2" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">1. Cole o Link</h3><p class="text-xs text-zinc-400">Insira a URL do vídeo do YouTube, TikTok ou podcast.</p></div>
-<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="brain" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">2. IA Analisa</h3><p class="text-xs text-zinc-400">Transcrição, detecção de ganchos e seleção dos melhores momentos.</p></div>
-<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="download" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">3. Baixe os Cortes</h3><p class="text-xs text-zinc-400">Cortes em 9:16 com legendas, prontos para Shorts, Reels e TikTok.</p></div>
+<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="link-2" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">1. Cole o Link</h3><p class="text-xs text-zinc-400">Insira a URL do YouTube, TikTok, podcast ou envie o arquivo.</p></div>
+<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="brain" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">2. IA Analisa &amp; Cria</h3><p class="text-xs text-zinc-400">Ganchos, enquadramento 9:16, legendas, B-Roll, música e sound design.</p></div>
+<div class="bg-zinc-900/50 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all"><div class="bg-brand-600/15 w-9 h-9 rounded-xl flex items-center justify-center text-brand-400 mb-3"><i data-lucide="download" class="w-4 h-4"></i></div><h3 class="font-bold text-sm mb-1">3. Baixe &amp; Publique</h3><p class="text-xs text-zinc-400">HD sem marca d'água, pronto para Shorts, Reels, TikTok e LinkedIn.</p></div>
+</div>
+</div>
+</section>
+
+<!-- ===== DESTAQUE: AI Music + Sound Design ===== -->
+<section id="ai-music" class="py-16 border-t border-white/5 bg-zinc-950/50">
+<div class="max-w-5xl mx-auto px-4">
+<div class="grid lg:grid-cols-2 gap-8 items-center">
+<div>
+<div class="inline-flex items-center gap-1.5 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-brand-300 text-xs font-semibold mb-4"><i data-lucide="music" class="w-3 h-3"></i> Novo recurso</div>
+<h2 class="text-2xl sm:text-3xl font-bold leading-tight">AI Music + <span class="gt">Sound Design</span></h2>
+<p class="mt-3 text-zinc-400 text-sm leading-relaxed">Descreva o clima e a IA compõe trilhas originais e efeitos sonoros no estilo que o seu vídeo pede — sem royalties, sem copyright strike. Do lo-fi ao épico cinemático, em segundos.</p>
+<ul class="mt-5 space-y-2.5 text-sm text-zinc-300">
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Gere trilhas sob medida por prompt, gênero, humor e duração</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Sound design: whooshes, impacts, risers, atmosferas e foley</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Beat-sync automático: cortes alinhados ao ritmo da música</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Remoção de ruído e limpeza de voz com IA</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> 100% livre de direitos autorais para uso comercial</li>
+</ul>
+<button onclick="openStudioTab('music')" class="mt-6 bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-xl shadow-brand-600/25 active:scale-95 transition inline-flex items-center gap-2"><i data-lucide="wand-2" class="w-4 h-4"></i> Experimentar no Studio</button>
+</div>
+<div class="bg-zinc-900/70 border border-zinc-800 rounded-3xl p-5 glow space-y-3">
+<div class="flex items-center justify-between"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Gerador de trilha · preview</span><span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold">Pronto</span></div>
+<div class="bg-black/50 border border-zinc-800 rounded-2xl p-4">
+<p class="text-xs text-zinc-300 mb-3"><i data-lucide="sparkles" class="w-3 h-3 inline text-brand-400"></i> Prompt: <span class="text-white font-semibold">"lo-fi chill para podcast noturno, 80 BPM"</span></div>
+<div class="wave justify-center py-1" id="homeWave"></div>
+<div class="flex items-center justify-between mt-3 text-[10px] text-zinc-500 font-mono"><span>00:00</span><span class="text-brand-400 font-bold">LoFi_Night_v1 · 44.1kHz</span><span>00:30</span></div>
+</div>
+<div class="grid grid-cols-3 gap-2">
+<button onclick="toast('🔊 Whoosh gerado!','Efeito sonoro adicionado à biblioteca.')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-[10px] text-zinc-300 hover:border-brand-500/40 transition flex items-center gap-1.5"><i data-lucide="wind" class="w-3.5 h-3.5 text-sky-400"></i> Whoosh</button>
+<button onclick="toast('💥 Impact gerado!','Efeito sonoro adicionado à biblioteca.')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-[10px] text-zinc-300 hover:border-brand-500/40 transition flex items-center gap-1.5"><i data-lucide="circle-dot" class="w-3.5 h-3.5 text-orange-400"></i> Impact</button>
+<button onclick="toast('🚀 Riser gerado!','Efeito sonoro adicionado à biblioteca.')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-2.5 text-[10px] text-zinc-300 hover:border-brand-500/40 transition flex items-center gap-1.5"><i data-lucide="trending-up" class="w-3.5 h-3.5 text-brand-400"></i> Riser</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+
+<!-- ===== DESTAQUE: AI B-Roll Generator ===== -->
+<section id="ai-broll" class="py-16 border-t border-white/5">
+<div class="max-w-5xl mx-auto px-4">
+<div class="grid lg:grid-cols-2 gap-8 items-center">
+<div class="order-2 lg:order-1 bg-zinc-900/70 border border-zinc-800 rounded-3xl p-5 glow space-y-3">
+<div class="flex items-center justify-between"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">B-Roll automático · transcrição</span><span class="text-[10px] bg-brand-500/10 text-brand-300 border border-brand-500/20 px-2 py-0.5 rounded-full font-bold">98% match</span></div>
+<div class="space-y-2">
+<div class="bg-black/40 border border-zinc-800 rounded-xl p-3 flex items-center gap-3">
+<div class="thumb thumb-1 w-14 h-9 rounded-lg shrink-0"></div>
+<div class="min-w-0"><p class="text-[10px] text-zinc-500 font-mono">00:12 — "negócios mudam rápido..."</p><p class="text-xs font-semibold truncate">→ Stock: pessoa digitando no laptop</p></div>
+<span class="ml-auto text-[10px] text-emerald-400 font-bold font-mono">96</span>
+</div>
+<div class="bg-black/40 border border-zinc-800 rounded-xl p-3 flex items-center gap-3">
+<div class="thumb thumb-2 w-14 h-9 rounded-lg shrink-0"></div>
+<div class="min-w-0"><p class="text-[10px] text-zinc-500 font-mono">00:28 — "a IA acelera tudo..."</p><p class="text-xs font-semibold truncate">→ AI: fluxo de dados abstrato 4K</p></div>
+<span class="ml-auto text-[10px] text-emerald-400 font-bold font-mono">94</span>
+</div>
+<div class="bg-black/40 border border-zinc-800 rounded-xl p-3 flex items-center gap-3">
+<div class="thumb thumb-3 w-14 h-9 rounded-lg shrink-0"></div>
+<div class="min-w-0"><p class="text-[10px] text-zinc-500 font-mono">00:45 — "o futuro é criativo..."</p><p class="text-xs font-semibold truncate">→ Stock: time criativo em reunião</p></div>
+<span class="ml-auto text-[10px] text-emerald-400 font-bold font-mono">91</span>
+</div>
+</div>
+<p class="text-[10px] text-zinc-500 text-center">Análise semântica frase a frase · 4M+ clips stock + geração por texto→vídeo</p>
+</div>
+<div class="order-1 lg:order-2">
+<div class="inline-flex items-center gap-1.5 bg-brand-500/10 border border-brand-500/20 px-3 py-1 rounded-full text-brand-300 text-xs font-semibold mb-4"><i data-lucide="film" class="w-3 h-3"></i> Novo recurso</div>
+<h2 class="text-2xl sm:text-3xl font-bold leading-tight">AI <span class="gt">B-Roll Generator</span></h2>
+<p class="mt-3 text-zinc-400 text-sm leading-relaxed">A IA lê a transcrição do seu vídeo, entende o contexto de cada frase e insere o B-Roll perfeito — stock royalty-free ou clipes gerados por IA — já cortados e sincronizados na timeline.</p>
+<ul class="mt-5 space-y-2.5 text-sm text-zinc-300">
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Seleção semântica: entende o significado, não só palavras-chave</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> 4 milhões+ de clips stock licenciados para uso comercial</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Text→Video: gere cenas únicas no estilo Runway, Veo ou Kling</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Troca com 1 clique e controle total do enquadramento</li>
+<li class="flex items-start gap-2"><i data-lucide="check-circle-2" class="w-4 h-4 text-emerald-400 mt-0.5 shrink-0"></i> Detecção automática dos melhores momentos para inserir</li>
+</ul>
+<button onclick="openStudioTab('broll')" class="mt-6 bg-brand-600 hover:bg-brand-500 text-white font-bold text-sm px-6 py-3 rounded-xl shadow-xl shadow-brand-600/25 active:scale-95 transition inline-flex items-center gap-2"><i data-lucide="wand-2" class="w-4 h-4"></i> Experimentar no Studio</button>
+</div>
 </div>
 </div>
 </section>
@@ -83,42 +203,92 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 <!-- Features -->
 <section id="features" class="py-16 border-t border-white/5 bg-zinc-950/50">
 <div class="max-w-5xl mx-auto px-4">
-<h2 class="text-2xl sm:text-3xl font-bold text-center mb-10">Tudo que você precisa</h2>
-<div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="smartphone" class="w-5 h-5 text-brand-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Formato 9:16</h4><p class="text-[11px] text-zinc-400">Shorts, Reels, TikTok</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="captions" class="w-5 h-5 text-sky-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Legendas IA</h4><p class="text-[11px] text-zinc-400">Hormozi, Clean, Neon</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="languages" class="w-5 h-5 text-emerald-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Tradução</h4><p class="text-[11px] text-zinc-400">PT, EN, ZH-CN</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="trending-up" class="w-5 h-5 text-amber-400 mb-2"></i><h4 class="font-bold text-xs mb-1">ViralScore</h4><p class="text-[11px] text-zinc-400">Score 0-100</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="scan-face" class="w-5 h-5 text-pink-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Auto-Reframe</h4><p class="text-[11px] text-zinc-400">Foco no rosto</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="clock" class="w-5 h-5 text-orange-400 mb-2"></i><h4 class="font-bold text-xs mb-1">15-90s</h4><p class="text-[11px] text-zinc-400">Duração flexível</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="shield" class="w-5 h-5 text-teal-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Seguro</h4><p class="text-[11px] text-zinc-400">Storage privado</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl"><i data-lucide="zap" class="w-5 h-5 text-yellow-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Rápido</h4><p class="text-[11px] text-zinc-400">Cortes em minutos</p></div>
+<h2 class="text-2xl sm:text-3xl font-bold text-center mb-3">Tudo de IA de edição em um só lugar</h2>
+<p class="text-center text-zinc-400 text-sm mb-10 max-w-2xl mx-auto">Pesquisamos as melhores ferramentas do mundo — Opus Clip, Descript, Runway, VEED, Suno, ElevenLabs, CapCut e mais — e reunimos os recursos essenciais aqui.</p>
+
+<div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3">
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="music" class="w-5 h-5 text-brand-400 mb-2"></i><h4 class="font-bold text-xs mb-1">AI Music + Sound Design</h4><p class="text-[11px] text-zinc-400">Trilhas e SFX originais sem royalties</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="film" class="w-5 h-5 text-sky-400 mb-2"></i><h4 class="font-bold text-xs mb-1">AI B-Roll Generator</h4><p class="text-[11px] text-zinc-400">Stock 4M+ e text→vídeo automático</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="captions" class="w-5 h-5 text-yellow-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Legendas IA</h4><p class="text-[11px] text-zinc-400">Estilos Hormozi, Clean, Neon</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="languages" class="w-5 h-5 text-emerald-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Tradução &amp; Dublagem</h4><p class="text-[11px] text-zinc-400">40+ idiomas com voz clonada</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="trending-up" class="w-5 h-5 text-amber-400 mb-2"></i><h4 class="font-bold text-xs mb-1">ViralScore</h4><p class="text-[11px] text-zinc-400">Score 0–100 de potencial viral</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="scan-face" class="w-5 h-5 text-pink-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Auto-Reframe 9:16</h4><p class="text-[11px] text-zinc-400">Rastreio de rosto e falante ativo</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="scissors" class="w-5 h-5 text-orange-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Corte de Silêncio</h4><p class="text-[11px] text-zinc-400">Remove pausas e trechos mortos</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="file-text" class="w-5 h-5 text-violet-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Edição por Texto</h4><p class="text-[11px] text-zinc-400">Edite o vídeo editando a transcrição</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="mic" class="w-5 h-5 text-red-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Voiceover IA</h4><p class="text-[11px] text-zinc-400">TTS natural + clonagem de voz</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="audio-waveform" class="w-5 h-5 text-teal-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Limpeza de Áudio</h4><p class="text-[11px] text-zinc-400">Remove ruído e eco automaticamente</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="eraser" class="w-5 h-5 text-cyan-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Remover Fundo</h4><p class="text-[11px] text-zinc-400">Chroma key e blur sem green screen</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="eye" class="w-5 h-5 text-indigo-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Eye Contact</h4><p class="text-[11px] text-zinc-400">Corrige o olhar para a câmera</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="smile" class="w-5 h-5 text-yellow-300 mb-2"></i><h4 class="font-bold text-xs mb-1">Emojis &amp; Keywords</h4><p class="text-[11px] text-zinc-400">Destaque automático de palavras</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="mouse-pointer-click" class="w-5 h-5 text-fuchsia-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Auto-Zoom &amp; Transições</h4><p class="text-[11px] text-zinc-400">Zooms e cortes no ritmo certo</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="layers" class="w-5 h-5 text-lime-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Export Multi-formato</h4><p class="text-[11px] text-zinc-400">9:16, 1:1, 4:5 e 16:9 em HD</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="timer" class="w-5 h-5 text-orange-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Clips de 15–90s</h4><p class="text-[11px] text-zinc-400">Duração flexível por plataforma</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="layout-grid" class="w-5 h-5 text-blue-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Processamento em Lote</h4><p class="text-[11px] text-zinc-400">Vários vídeos de uma vez só</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="type" class="w-5 h-5 text-rose-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Títulos com IA</h4><p class="text-[11px] text-zinc-400">Hooks e títulos otimizados</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="share-2" class="w-5 h-5 text-emerald-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Publique direto</h4><p class="text-[11px] text-zinc-400">YouTube, TikTok, Reels e LinkedIn</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="zap" class="w-5 h-5 text-yellow-400 mb-2"></i><h4 class="font-bold text-xs mb-1">12x mais rápido</h4><p class="text-[11px] text-zinc-400">Cortes prontos em minutos</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="shield" class="w-5 h-5 text-teal-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Seguro &amp; privado</h4><p class="text-[11px] text-zinc-400">Armazenamento criptografado</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="users" class="w-5 h-5 text-brand-400 mb-2"></i><h4 class="font-bold text-xs mb-1">Colaboração</h4><p class="text-[11px] text-zinc-400">Times e agências com acesso</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="code" class="w-5 h-5 text-zinc-300 mb-2"></i><h4 class="font-bold text-xs mb-1">API access</h4><p class="text-[11px] text-zinc-400">Integre a IA no seu produto</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/60 p-4 rounded-2xl card-glow transition-all"><i data-lucide="sparkles" class="w-5 h-5 text-brand-300 mb-2"></i><h4 class="font-bold text-xs mb-1">Novos recursos todo mês</h4><p class="text-[11px] text-zinc-400">Sempre atualizado com o estado da arte</p></div>
+</div>
+</div>
+</section>
+
+<!-- Tools / IA toolbox -->
+<section id="tools" class="py-16 border-t border-white/5">
+<div class="max-w-5xl mx-auto px-4">
+<h2 class="text-2xl sm:text-3xl font-bold text-center mb-3">Ferramentas IA do Studio</h2>
+<p class="text-center text-zinc-400 text-sm mb-10">Três módulos profissionais que trabalham juntos no mesmo projeto.</p>
+<div class="grid sm:grid-cols-3 gap-4">
+<div onclick="openStudioTab('clips')" class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all cursor-pointer group">
+<div class="bg-brand-600/15 w-10 h-10 rounded-xl flex items-center justify-center text-brand-400 mb-3 group-hover:scale-110 transition"><i data-lucide="scissors" class="w-5 h-5"></i></div>
+<h3 class="font-bold text-sm mb-1">🎯 Cortes Virais</h3><p class="text-xs text-zinc-400">IA detecta ganchos, enquadra 9:16, legenda e scoreia cada corte.</p>
+<span class="mt-3 inline-flex items-center gap-1 text-[11px] text-brand-400 font-semibold">Abrir módulo <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+</div>
+<div onclick="openStudioTab('music')" class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all cursor-pointer group">
+<div class="bg-sky-600/15 w-10 h-10 rounded-xl flex items-center justify-center text-sky-400 mb-3 group-hover:scale-110 transition"><i data-lucide="music" class="w-5 h-5"></i></div>
+<h3 class="font-bold text-sm mb-1">🎵 AI Music + Sound Design</h3><p class="text-xs text-zinc-400">Componha trilhas e efeitos sonoros com IA, livres de royalties.</p>
+<span class="mt-3 inline-flex items-center gap-1 text-[11px] text-sky-400 font-semibold">Abrir módulo <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+</div>
+<div onclick="openStudioTab('broll')" class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl card-glow transition-all cursor-pointer group">
+<div class="bg-emerald-600/15 w-10 h-10 rounded-xl flex items-center justify-center text-emerald-400 mb-3 group-hover:scale-110 transition"><i data-lucide="film" class="w-5 h-5"></i></div>
+<h3 class="font-bold text-sm mb-1">🎞️ AI B-Roll Generator</h3><p class="text-xs text-zinc-400">B-Roll perfeito para cada frase: stock 4M+ ou gerado por IA.</p>
+<span class="mt-3 inline-flex items-center gap-1 text-[11px] text-emerald-400 font-semibold">Abrir módulo <i data-lucide="arrow-right" class="w-3 h-3"></i></span>
+</div>
 </div>
 </div>
 </section>
 
 <!-- Pricing -->
-<section id="pricing" class="py-16 border-t border-white/5">
+<section id="pricing" class="py-16 border-t border-white/5 bg-zinc-950/50">
 <div class="max-w-4xl mx-auto px-4">
 <h2 class="text-2xl sm:text-3xl font-bold text-center mb-10">Planos simples e transparentes</h2>
 <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
-<div class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl flex flex-col"><h3 class="font-bold">Free</h3><p class="text-xs text-zinc-400 mt-1">Para experimentar</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$0</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 100 créditos/mês</li><li>✓ Até 6 cortes/vídeo</li><li>✓ Legendas automáticas</li><li>✓ Formato 9:16</li></ul><button onclick="showPage('login')" class="mt-5 w-full border border-zinc-700 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-zinc-800 transition">Começar Grátis</button></div>
-<div class="bg-zinc-900/80 border-2 border-brand-500/50 p-5 rounded-2xl flex flex-col relative glow"><span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-full">Popular</span><h3 class="font-bold">Pro</h3><p class="text-xs text-zinc-400 mt-1">Para criadores</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$49</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 2.000 créditos/mês</li><li>✓ Tudo do Free</li><li>✓ Tradução 3 idiomas</li><li>✓ Exportação Full HD</li><li>✓ Prioridade na fila</li></ul><button onclick="showPage('login')" class="mt-5 w-full bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-brand-500 transition shadow-lg shadow-brand-600/20">Assinar Pro</button></div>
-<div class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl flex flex-col"><h3 class="font-bold">Business</h3><p class="text-xs text-zinc-400 mt-1">Para agências</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$149</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 10.000 créditos/mês</li><li>✓ Tudo do Pro</li><li>✓ API access</li><li>✓ Múltiplos usuários</li><li>✓ Suporte prioritário</li></ul><button onclick="showPage('login')" class="mt-5 w-full border border-zinc-700 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-zinc-800 transition">Falar com Vendas</button></div>
+<div class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl flex flex-col"><h3 class="font-bold">Free</h3><p class="text-xs text-zinc-400 mt-1">Para experimentar</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$0</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 100 créditos/mês</li><li>✓ Até 6 cortes/vídeo</li><li>✓ Legendas automáticas</li><li>✓ Formato 9:16</li><li>✓ 3 trilhas de música IA/mês</li><li>✓ 10 clipes de B-Roll/mês</li></ul><button onclick="showPage('login')" class="mt-5 w-full border border-zinc-700 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-zinc-800 transition">Começar Grátis</button></div>
+<div class="bg-zinc-900/80 border-2 border-brand-500/50 p-5 rounded-2xl flex flex-col relative glow"><span class="absolute -top-2.5 left-1/2 -translate-x-1/2 bg-brand-600 text-white text-[10px] font-bold px-3 py-0.5 rounded-full">Popular</span><h3 class="font-bold">Pro</h3><p class="text-xs text-zinc-400 mt-1">Para criadores</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$49</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 2.000 créditos/mês</li><li>✓ Tudo do Free</li><li>✓ Dublagem 40+ idiomas</li><li>✓ AI Music ilimitada + SFX</li><li>✓ B-Roll ilimitado (stock + IA)</li><li>✓ Exportação Full HD sem marca</li><li>✓ Prioridade na fila</li></ul><button onclick="showPage('login')" class="mt-5 w-full bg-brand-600 text-white font-bold py-2.5 rounded-xl text-xs hover:bg-brand-500 transition shadow-lg shadow-brand-600/20">Assinar Pro</button></div>
+<div class="bg-zinc-900/60 border border-zinc-800/80 p-5 rounded-2xl flex flex-col"><h3 class="font-bold">Business</h3><p class="text-xs text-zinc-400 mt-1">Para agências</p><div class="mt-4 mb-5"><span class="text-3xl font-black">R$149</span><span class="text-zinc-400 text-xs">/mês</span></div><ul class="space-y-2 text-xs text-zinc-300 flex-1"><li>✓ 10.000 créditos/mês</li><li>✓ Tudo do Pro</li><li>✓ API access</li><li>✓ Múltiplos usuários</li><li>✓ Processamento em lote</li><li>✓ Suporte prioritário</li></ul><button onclick="showPage('login')" class="mt-5 w-full border border-zinc-700 text-white font-semibold py-2.5 rounded-xl text-xs hover:bg-zinc-800 transition">Falar com Vendas</button></div>
 </div>
 </div>
 </section>
 
 <!-- CTA Final -->
-<section class="py-16 border-t border-white/5 bg-zinc-950/50 text-center">
+<section class="py-16 border-t border-white/5 text-center">
 <div class="max-w-2xl mx-auto px-4">
 <h2 class="text-2xl sm:text-4xl font-black">Pronto para criar cortes <span class="gt">que viralizam</span>?</h2>
-<p class="mt-3 text-zinc-400 text-sm">Cole o link do seu vídeo e veja a IA encontrar os melhores momentos.</p>
+<p class="mt-3 text-zinc-400 text-sm">Cole o link do seu vídeo e deixe a IA cuidar de cortes, legendas, B-Roll, música e sound design.</p>
 <button onclick="showPage('login')" class="mt-6 bg-brand-600 hover:bg-brand-500 text-white font-bold px-8 py-3.5 rounded-xl shadow-xl shadow-brand-600/25 active:scale-95 transition text-sm">Começar Agora — É Grátis</button>
 </div>
 </section>
 
-<footer class="border-t border-white/5 py-6 text-center text-xs text-zinc-600">© 2025 ClipForge AI. Todos os direitos reservados.</footer>
+<footer class="border-t border-white/5 py-8 text-center text-xs text-zinc-600 space-y-3">
+<div class="flex items-center justify-center gap-2">
+<div class="bg-brand-600/20 border border-brand-500/30 p-1 rounded-lg text-brand-400"><i data-lucide="clapperboard" class="w-3 h-3"></i></div>
+<span class="font-extrabold text-zinc-400 text-xs">Clip<span class="gt">Forge</span></span>
+</div>
+<p>© 2026 ClipForge AI. Todos os direitos reservados.</p>
+<p class="text-zinc-700">Feito para criadores · Cortes · AI Music + Sound Design · AI B-Roll · Legendas · Dublagem</p>
+</footer>
 </div>
 
 <!-- ===== PAGE: LOGIN ===== -->
@@ -130,10 +300,10 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 <button onclick="doLogin()" class="w-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white font-semibold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition"><i data-lucide="github" class="w-4 h-4"></i> Continuar com GitHub</button>
 <button onclick="doLogin()" class="w-full bg-zinc-800 hover:bg-zinc-700 border border-zinc-700 text-white font-semibold text-xs py-2.5 rounded-xl flex items-center justify-center gap-2 transition"><i data-lucide="mail" class="w-4 h-4"></i> Continuar com Google</button>
 <div class="flex items-center gap-2 text-xs text-zinc-500"><div class="flex-1 h-px bg-zinc-800"></div>ou<div class="flex-1 h-px bg-zinc-800"></div></div>
-<div class="space-y-2"><label class="text-xs text-zinc-400 font-medium">Email</label><input type="email" value="criador@clipforge.ai" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-500"></div>
+<div class="space-y-2"><label class="text-xs text-zinc-400 font-medium">Email</label><input id="loginEmail" type="email" value="criador@clipforge.ai" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-xl px-3 py-2.5 focus:outline-none focus:border-brand-500"></div>
 <button onclick="doLogin()" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs py-2.5 rounded-xl shadow-lg shadow-brand-600/20 transition">Entrar</button>
 </div>
-<p class="text-center text-xs text-zinc-500">Não tem conta? <a href="#" onclick="doLogin()" class="text-brand-400 hover:underline">Criar conta grátis</a></p>
+<p class="text-center text-xs text-zinc-500">Não tem conta? <a href="#" onclick="doLogin();return false" class="text-brand-400 hover:underline">Criar conta grátis</a></p>
 </div>
 </div>
 </div>
@@ -142,19 +312,31 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 <div id="page-dash" class="page hidden">
 <div class="max-w-5xl mx-auto px-4 py-6 space-y-6 fade-in">
 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-<div><h1 class="text-xl font-bold">Olá, Criador 👋</h1><p class="text-xs text-zinc-400 mt-0.5">Plano Free · 72 créditos restantes</p></div>
+<div><h1 class="text-xl font-bold">Olá, Criador 👋</h1><p class="text-xs text-zinc-400 mt-0.5">Plano Free · <span id="creditsLabel">72</span> créditos restantes</p></div>
 <button onclick="showPage('studio')" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-lg shadow-brand-600/20"><i data-lucide="plus" class="w-3.5 h-3.5"></i> Novo Projeto</button>
 </div>
 <div class="grid grid-cols-2 lg:grid-cols-4 gap-3">
-<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Projetos</p><p class="text-xl font-bold mt-1">4</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Cortes Criados</p><p class="text-xl font-bold mt-1 text-brand-400">12</p></div>
-<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Créditos</p><p class="text-xl font-bold mt-1 text-emerald-400">72</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Projetos</p><p class="text-xl font-bold mt-1" id="statProjects">4</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Cortes Criados</p><p class="text-xl font-bold mt-1 text-brand-400" id="statClips">12</p></div>
+<div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Créditos</p><p class="text-xl font-bold mt-1 text-emerald-400" id="statCredits">72</p></div>
 <div class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl"><p class="text-[10px] text-zinc-400 font-medium">Minutos</p><p class="text-xl font-bold mt-1">47</p></div>
 </div>
+
+<!-- Atalhos dos módulos -->
+<div>
+<h2 class="text-sm font-bold mb-3">Ferramentas IA</h2>
+<div class="grid sm:grid-cols-3 gap-3">
+<button onclick="openStudioTab('clips')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center gap-3 card-glow transition-all text-left"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="scissors" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Cortes Virais</h4><p class="text-[10px] text-zinc-400">Ganchos + 9:16 + legendas</p></div></button>
+<button onclick="openStudioTab('music')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center gap-3 card-glow transition-all text-left"><div class="w-9 h-9 bg-sky-600/15 rounded-xl flex items-center justify-center text-sky-400"><i data-lucide="music" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">AI Music + Sound</h4><p class="text-[10px] text-zinc-400">Trilhas e SFX sem royalties</p></div></button>
+<button onclick="openStudioTab('broll')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center gap-3 card-glow transition-all text-left"><div class="w-9 h-9 bg-emerald-600/15 rounded-xl flex items-center justify-center text-emerald-400"><i data-lucide="film" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">AI B-Roll Generator</h4><p class="text-[10px] text-zinc-400">Stock 4M+ ou text→vídeo</p></div></button>
+</div>
+</div>
+
 <div><h2 class="text-sm font-bold mb-3">Projetos Recentes</h2>
 <div class="space-y-2">
-<div onclick="showPage('studio')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer card-glow transition-all"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="folder-open" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Podcast #42 — IA nos Negócios</h4><p class="text-[10px] text-zinc-400">4 cortes · Há 2 horas</p></div></div><span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Pronto</span></div>
-<div onclick="showPage('studio')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer card-glow transition-all"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="folder-open" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Entrevista CEO StartupX</h4><p class="text-[10px] text-zinc-400">2 cortes · Há 1 dia</p></div></div><span class="text-[10px] bg-amber-500/10 text-amber-400 font-bold px-2 py-0.5 rounded-full border border-amber-500/20">Processando</span></div>
+<div onclick="showPage('studio')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer card-glow transition-all"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="folder-open" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Podcast #42 — IA nos Negócios</h4><p class="text-[10px] text-zinc-400">4 cortes · 2 trilhas IA · Há 2 horas</p></div></div><span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Pronto</span></div>
+<div onclick="showPage('studio')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer card-glow transition-all"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="folder-open" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Entrevista CEO StartupX</h4><p class="text-[10px] text-zinc-400">2 cortes · B-Roll 60% · Há 1 dia</p></div></div><span class="text-[10px] bg-amber-500/10 text-amber-400 font-bold px-2 py-0.5 rounded-full border border-amber-500/20">Processando</span></div>
+<div onclick="showPage('studio')" class="bg-zinc-900/60 border border-zinc-800/80 p-3.5 rounded-2xl flex items-center justify-between cursor-pointer card-glow transition-all"><div class="flex items-center gap-3"><div class="w-9 h-9 bg-brand-600/15 rounded-xl flex items-center justify-center text-brand-400"><i data-lucide="folder-open" class="w-4 h-4"></i></div><div><h4 class="font-semibold text-xs">Aula — Funil de Vendas 2026</h4><p class="text-[10px] text-zinc-400">6 cortes · Dublado EN · Há 3 dias</p></div></div><span class="text-[10px] bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-500/20">Pronto</span></div>
 </div>
 </div>
 </div>
@@ -163,65 +345,248 @@ body{background:#050507;color:#f4f4f5;font-family:'Inter',sans-serif}
 <!-- ===== PAGE: STUDIO ===== -->
 <div id="page-studio" class="page hidden">
 <div class="max-w-5xl mx-auto px-3 py-4 space-y-3 fade-in">
+
 <!-- Input -->
 <div class="bg-zinc-900/80 border border-zinc-800 p-3 rounded-2xl space-y-2">
-<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Link do Vídeo do YouTube:</label>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Link do vídeo (YouTube/TikTok) ou nome do projeto:</label>
 <div class="flex gap-2">
 <input id="ytUrl" type="text" value="https://www.youtube.com/watch?v=kJQP7kiw5Fk" class="flex-1 bg-black border border-zinc-700 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-brand-500">
 <button onclick="analisar()" id="btnAnalisar" class="bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1 shadow active:scale-95"><i data-lucide="wand-2" class="w-3.5 h-3.5"></i> Analisar</button>
 </div>
 </div>
+
 <!-- Loading -->
 <div id="loadBox" class="hidden bg-zinc-900 border border-brand-500/30 p-4 rounded-2xl text-center space-y-2"><div class="inline-block animate-spin text-brand-400"><i data-lucide="loader-2" class="w-6 h-6"></i></div><p class="text-xs font-bold text-brand-300" id="loadMsg">Transcrevendo com IA...</p></div>
-<!-- Player + Controls -->
+
+<!-- Tabs -->
+<div class="grid grid-cols-3 gap-2">
+<button id="tab-clips" onclick="switchTab('clips')" class="tab-active bg-zinc-900 border border-zinc-800 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition"><i data-lucide="scissors" class="w-3.5 h-3.5"></i> Cortes IA</button>
+<button id="tab-music" onclick="switchTab('music')" class="bg-zinc-900 border border-zinc-800 text-zinc-400 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition hover:text-white"><i data-lucide="music" class="w-3.5 h-3.5"></i> AI Music + Sound</button>
+<button id="tab-broll" onclick="switchTab('broll')" class="bg-zinc-900 border border-zinc-800 text-zinc-400 py-2.5 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition hover:text-white"><i data-lucide="film" class="w-3.5 h-3.5"></i> AI B-Roll</button>
+</div>
+
+<!-- ========== MÓDULO: CORTES ========== -->
+<div id="mod-clips" class="space-y-3">
 <div class="grid grid-cols-1 lg:grid-cols-12 gap-3">
 <div class="lg:col-span-5 flex flex-col items-center space-y-3">
 <div class="bg-zinc-900/90 border border-zinc-800 p-3 rounded-3xl text-center space-y-2 w-full">
 <div class="flex justify-between items-center text-[10px]"><span class="text-brand-400 font-bold" id="cutLabel">Corte #1</span><span id="scoreBadge" class="bg-emerald-500/10 text-emerald-400 font-bold px-2 py-0.5 rounded-full border border-emerald-500/20 font-mono">95/100 ⭐</span></div>
 <div class="vp mx-auto border-2 border-brand-500/40 glow"><div id="pBox" class="w-full h-full"></div><div class="absolute bottom-5 left-2 right-2 z-20 pointer-events-none text-center"><div id="subLive" class="bg-black/85 border border-yellow-400/80 text-yellow-300 font-black text-[11px] px-2 py-1 rounded-lg uppercase tracking-wider shadow inline-block">"O SEGREDO É COMEÇAR AGORA!"</div></div></div>
-<div class="flex items-center justify-center gap-2"><button onclick="reiniciar()" class="p-2 bg-zinc-800 text-zinc-300 rounded-xl active:scale-95"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button><button onclick="togglePlay()" id="btnPlay" class="px-4 py-2 bg-brand-600 text-white font-bold text-xs rounded-xl flex items-center gap-1 shadow active:scale-95"><i data-lucide="play" class="w-3.5 h-3.5"></i> Play</button><button onclick="toggleMute()" id="btnMute" class="p-2 bg-zinc-800 text-zinc-300 rounded-xl active:scale-95"><i data-lucide="volume-2" class="w-3.5 h-3.5"></i></button></div>
+<div class="flex items-center justify-center gap-2"><button onclick="reiniciar()" class="p-2 bg-zinc-800 text-zinc-300 rounded-xl active:scale-95" title="Reiniciar"><i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i></button><button onclick="togglePlay()" id="btnPlay" class="px-4 py-2 bg-brand-600 text-white font-bold text-xs rounded-xl flex items-center gap-1 shadow active:scale-95"><i data-lucide="play" class="w-3.5 h-3.5"></i> Play</button><button onclick="toggleMute()" id="btnMute" class="p-2 bg-zinc-800 text-zinc-300 rounded-xl active:scale-95" title="Mudo"><i data-lucide="volume-2" class="w-3.5 h-3.5"></i></button></div>
 <div class="text-[10px] font-mono text-zinc-400" id="tInfo">00:15 / 00:45</div>
 </div>
 </div>
 <div class="lg:col-span-7 space-y-3">
-<!-- Cortes IA -->
 <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-2xl space-y-2">
-<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Cortes Detectados pela IA:</span>
-<div onclick="trocar(15,45,'O SEGREDO É COMEÇAR AGORA!',95,1)" id="c1" class="p-2.5 bg-zinc-950 border-2 border-brand-500 rounded-xl flex justify-between items-center cursor-pointer"><div><h4 class="font-bold text-xs">1. Gancho de Alta Retenção</h4><p class="text-[10px] text-zinc-400">00:15-00:45 (30s)</p></div><span class="text-emerald-400 font-bold text-xs font-mono">95</span></div>
-<div onclick="trocar(60,90,'ESSA TÉCNICA MUDA TUDO!',91,2)" id="c2" class="p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl flex justify-between items-center cursor-pointer"><div><h4 class="font-bold text-xs">2. Quebra de Padrão</h4><p class="text-[10px] text-zinc-400">01:00-01:30 (30s)</p></div><span class="text-emerald-400 font-bold text-xs font-mono">91</span></div>
-<div onclick="trocar(110,140,'NUNCA FAÇA ISSO NAS REDES!',88,3)" id="c3" class="p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl flex justify-between items-center cursor-pointer"><div><h4 class="font-bold text-xs">3. Dica de Monetização</h4><p class="text-[10px] text-zinc-400">01:50-02:20 (30s)</p></div><span class="text-emerald-400 font-bold text-xs font-mono">88</span></div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Cortes detectados pela IA:</span>
+<div id="clipList" class="space-y-2"></div>
 </div>
-<!-- Ajustes -->
 <div class="bg-zinc-900 border border-zinc-800 p-3 rounded-2xl space-y-2.5">
 <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block">Enquadramento:</span>
-<div class="grid grid-cols-3 gap-1.5"><button onclick="cam('left')" class="py-1.5 bg-zinc-800 rounded-lg text-zinc-300 text-[10px]">← Esq</button><button onclick="cam('center')" class="py-1.5 bg-brand-600 text-white font-bold rounded-lg text-[10px]">Centro</button><button onclick="cam('right')" class="py-1.5 bg-zinc-800 rounded-lg text-zinc-300 text-[10px]">Dir →</button></div>
+<div class="grid grid-cols-3 gap-1.5"><button onclick="cam('left')" class="py-1.5 bg-zinc-800 rounded-lg text-zinc-300 text-[10px] hover:bg-zinc-700">← Esq</button><button onclick="cam('center')" class="py-1.5 bg-brand-600 text-white font-bold rounded-lg text-[10px]">Centro</button><button onclick="cam('right')" class="py-1.5 bg-zinc-800 rounded-lg text-zinc-300 text-[10px] hover:bg-zinc-700">Dir →</button></div>
 <span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block pt-1">Legenda:</span>
 <input id="subIn" type="text" value="O SEGREDO É COMEÇAR AGORA!" oninput="document.getElementById('subLive').innerText='&quot;'+this.value+'&quot;'" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-lg p-2 font-bold focus:outline-none focus:border-brand-500">
 <div class="grid grid-cols-3 gap-1.5"><button onclick="estilo('h')" class="py-1 bg-brand-600 text-white font-bold rounded text-[10px]">Hormozi ⭐</button><button onclick="estilo('c')" class="py-1 bg-zinc-800 text-zinc-300 rounded text-[10px]">Clean</button><button onclick="estilo('n')" class="py-1 bg-zinc-800 text-zinc-300 rounded text-[10px]">Neon</button></div>
-<button onclick="alert('🎉 Corte 9:16 salvo com sucesso!')" class="w-full mt-1 bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow active:scale-95"><i data-lucide="download" class="w-3.5 h-3.5"></i> Baixar Corte 9:16</button>
+<div class="grid grid-cols-2 gap-1.5 pt-1">
+<button onclick="baixarCorte()" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow active:scale-95"><i data-lucide="download" class="w-3.5 h-3.5"></i> Baixar Corte 9:16</button>
+<button onclick="toast('📤 Enviando...','Corte enviado para YouTube Shorts (simulação).')" class="w-full bg-zinc-800 hover:bg-zinc-700 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 active:scale-95"><i data-lucide="share-2" class="w-3.5 h-3.5"></i> Publicar</button>
 </div>
 </div>
 </div>
 </div>
 </div>
 
+<!-- ========== MÓDULO: AI MUSIC + SOUND DESIGN ========== -->
+<div id="mod-music" class="hidden">
+<div class="grid lg:grid-cols-12 gap-3">
+<div class="lg:col-span-5 bg-zinc-900 border border-zinc-800 p-4 rounded-2xl space-y-4">
+<div>
+<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">Tipo:</span>
+<div class="grid grid-cols-2 gap-1.5">
+<button id="mtMusic" onclick="setMusicType('music')" class="tab-active py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"><i data-lucide="music" class="w-3.5 h-3.5"></i> Música</button>
+<button id="mtSfx" onclick="setMusicType('sfx')" class="py-2 bg-zinc-950 border border-zinc-800 text-zinc-400 rounded-xl text-xs font-bold flex items-center justify-center gap-1.5"><i data-lucide="audio-lines" class="w-3.5 h-3.5"></i> Sound Design (SFX)</button>
+</div>
+</div>
+<div id="musicFields">
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">Prompt:</label>
+<textarea id="musicPrompt" rows="2" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-brand-500 resize-none" placeholder="Ex: lo-fi chill para podcast noturno, 80 BPM">lo-fi chill para podcast noturno, 80 BPM</textarea>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5 mt-3">Gênero:</label>
+<div class="flex flex-wrap gap-1.5" id="genreChips">
+<button class="chip on" onclick="pickChip(this,'genre')">Lo-fi</button><button class="chip" onclick="pickChip(this,'genre')">Hip-Hop</button><button class="chip" onclick="pickChip(this,'genre')">Eletrônico</button><button class="chip" onclick="pickChip(this,'genre')">Cinematográfico</button><button class="chip" onclick="pickChip(this,'genre')">Trap</button><button class="chip" onclick="pickChip(this,'genre')">Pop</button><button class="chip" onclick="pickChip(this,'genre')">Rock</button><button class="chip" onclick="pickChip(this,'genre')">Corporativo</button><button class="chip" onclick="pickChip(this,'genre')">Ambient</button><button class="chip" onclick="pickChip(this,'genre')">Jazz</button>
+</div>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5 mt-3">Humor:</label>
+<div class="flex flex-wrap gap-1.5" id="moodChips">
+<button class="chip on" onclick="pickChip(this,'mood')">Relaxado</button><button class="chip" onclick="pickChip(this,'mood')">Energético</button><button class="chip" onclick="pickChip(this,'mood')">Épico</button><button class="chip" onclick="pickChip(this,'mood')">Tensa</button><button class="chip" onclick="pickChip(this,'mood')">Feliz</button><button class="chip" onclick="pickChip(this,'mood')">Melancólico</button>
+</div>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5 mt-3">Duração:</label>
+<div class="flex flex-wrap gap-1.5" id="durChips">
+<button class="chip" onclick="pickChip(this,'dur')">15s</button><button class="chip on" onclick="pickChip(this,'dur')">30s</button><button class="chip" onclick="pickChip(this,'dur')">60s</button><button class="chip" onclick="pickChip(this,'dur')">2 min</button>
+</div>
+</div>
+<div id="sfxFields" class="hidden">
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5">Efeito:</label>
+<div class="flex flex-wrap gap-1.5" id="sfxChips">
+<button class="chip on" onclick="pickChip(this,'sfx')">Whoosh</button><button class="chip" onclick="pickChip(this,'sfx')">Impact</button><button class="chip" onclick="pickChip(this,'sfx')">Riser</button><button class="chip" onclick="pickChip(this,'sfx')">Click UI</button><button class="chip" onclick="pickChip(this,'sfx')">Whoosh reverse</button><button class="chip" onclick="pickChip(this,'sfx')">Boom sub</button><button class="chip" onclick="pickChip(this,'sfx')">Sparkle</button><button class="chip" onclick="pickChip(this,'sfx')">Glitch</button><button class="chip" onclick="pickChip(this,'sfx')">Ambient drone</button><button class="chip" onclick="pickChip(this,'sfx')">Foley passos</button>
+</div>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5 mt-3">Descrição (opcional):</label>
+<input id="sfxPrompt" type="text" placeholder="Ex: whoosh suave para transição vertical" class="w-full bg-black border border-zinc-700 text-xs text-white rounded-xl px-3 py-2 focus:outline-none focus:border-brand-500">
+</div>
+<button onclick="gerarAudio()" id="btnAudio" class="w-full bg-brand-600 hover:bg-brand-500 text-white font-bold text-xs py-3 rounded-xl flex items-center justify-center gap-1.5 shadow-lg shadow-brand-600/20 active:scale-95 transition"><i data-lucide="sparkles" class="w-3.5 h-3.5"></i> Gerar com IA <span class="text-brand-200 font-medium">(2 créditos)</span></button>
+<p class="text-[10px] text-zinc-500 text-center">100% livre de direitos autorais · 44.1kHz WAV + MP3</p>
+</div>
+
+<div class="lg:col-span-7 space-y-3">
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<div class="flex items-center justify-between mb-3"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Trilhas geradas</span><span class="text-[10px] text-zinc-500" id="trackCount">0 faixas</span></div>
+<div id="audioProgress" class="hidden mb-3 bg-black/40 border border-brand-500/30 rounded-xl p-3 text-center space-y-1"><div class="inline-block animate-spin text-brand-400"><i data-lucide="loader-2" class="w-4 h-4"></i></div><p class="text-[11px] font-bold text-brand-300" id="audioMsg">Compondo melodia com IA...</p></div>
+<div id="trackList" class="space-y-2"><p class="text-xs text-zinc-500 text-center py-6">Nenhuma trilha ainda — descreva o clima e clique em <b class="text-zinc-300">Gerar com IA</b>.</p></div>
+</div>
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-3">Sound design rápido (1 clique)</span>
+<div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
+<button onclick="quickSfx('Whoosh')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-[10px] text-zinc-300 hover:border-sky-500/40 transition flex flex-col items-center gap-1.5"><i data-lucide="wind" class="w-4 h-4 text-sky-400"></i>Whoosh</button>
+<button onclick="quickSfx('Impact')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-[10px] text-zinc-300 hover:border-orange-500/40 transition flex flex-col items-center gap-1.5"><i data-lucide="circle-dot" class="w-4 h-4 text-orange-400"></i>Impact</button>
+<button onclick="quickSfx('Riser')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-[10px] text-zinc-300 hover:border-brand-500/40 transition flex flex-col items-center gap-1.5"><i data-lucide="trending-up" class="w-4 h-4 text-brand-400"></i>Riser</button>
+<button onclick="quickSfx('Glitch')" class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 text-[10px] text-zinc-300 hover:border-pink-500/40 transition flex flex-col items-center gap-1.5"><i data-lucide="zap" class="w-4 h-4 text-pink-400"></i>Glitch</button>
+</div>
+</div>
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-3">Mixagem automática</span>
+<div class="grid sm:grid-cols-3 gap-3 text-[11px]">
+<label class="flex flex-col gap-1 text-zinc-400">Volume da música <span class="text-white font-bold font-mono" id="mixVal">-12 dB</span><input type="range" min="-30" max="0" value="-12" oninput="document.getElementById('mixVal').innerText=this.value+' dB'" class="accent-brand-500"></label>
+<label class="flex flex-col gap-1 text-zinc-400">Ducking de voz <span class="text-white font-bold font-mono" id="duckVal">Auto</span><input type="range" min="0" max="100" value="70" oninput="document.getElementById('duckVal').innerText=this.value+'%'" class="accent-brand-500"></label>
+<label class="flex flex-col gap-1 text-zinc-400">Beat-sync dos cortes <span class="text-white font-bold font-mono" id="beatVal">Ligado</span><input type="range" min="0" max="1" value="1" oninput="document.getElementById('beatVal').innerText=this.value==='1'?'Ligado':'Desligado'" class="accent-brand-500"></label>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ========== MÓDULO: AI B-ROLL ========== -->
+<div id="mod-broll" class="hidden">
+<div class="grid lg:grid-cols-12 gap-3">
+<div class="lg:col-span-5 space-y-3">
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl space-y-3">
+<div class="flex items-center justify-between"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Transcrição analisada</span><span class="text-[10px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-2 py-0.5 rounded-full font-bold" id="brollProgress">0/6 inseridos</span></div>
+<div id="brollMsg" class="hidden bg-black/40 border border-emerald-500/30 rounded-xl p-3 text-center"><p class="text-[11px] font-bold text-emerald-300">✓ Análise semântica concluída — 6 momentos com B-Roll</p></div>
+<div class="space-y-2" id="transcript"></div>
+<button onclick="analiseBroll()" id="btnBroll" class="w-full bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-xs py-2.5 rounded-xl flex items-center justify-center gap-1.5 shadow active:scale-95"><i data-lucide="scan-search" class="w-3.5 h-3.5"></i> Analisar transcrição com IA</button>
+</div>
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-2">Fonte do B-Roll</span>
+<div class="grid grid-cols-2 gap-1.5">
+<button id="srcStock" onclick="setBrollSrc('stock')" class="tab-active py-2 bg-zinc-950 border border-zinc-800 rounded-xl text-[10px] font-bold">📦 Stock 4M+ clips</button>
+<button id="srcAi" onclick="setBrollSrc('ai')" class="py-2 bg-zinc-950 border border-zinc-800 text-zinc-400 rounded-xl text-[10px] font-bold">✨ Gerar com IA (text→vídeo)</button>
+</div>
+<label class="text-[10px] font-bold uppercase tracking-wider text-zinc-400 block mb-1.5 mt-3">Estilo visual (modo IA):</label>
+<div class="flex flex-wrap gap-1.5" id="styleChips">
+<button class="chip on" onclick="pickChip(this,'style')">Cinematográfico</button><button class="chip" onclick="pickChip(this,'style')">3D render</button><button class="chip" onclick="pickChip(this,'style')">Animação 2D</button><button class="chip" onclick="pickChip(this,'style')">Documental</button><button class="chip" onclick="pickChip(this,'style')">Motion graphics</button>
+</div>
+</div>
+</div>
+<div class="lg:col-span-7 space-y-3">
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<div class="flex items-center justify-between mb-3"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Sugestões da IA</span><span class="text-[10px] text-zinc-500">Clique para inserir na timeline</span></div>
+<div id="brollList" class="space-y-2"><p class="text-xs text-zinc-500 text-center py-6">Analise a transcrição para ver as sugestões de B-Roll.</p></div>
+</div>
+<div class="bg-zinc-900 border border-zinc-800 p-4 rounded-2xl">
+<div class="flex items-center justify-between mb-3"><span class="text-[10px] font-bold uppercase tracking-wider text-zinc-400">Timeline com B-Roll</span><button onclick="toast('💾 Timeline salva','Projeto atualizado com os clipes inseridos.')" class="text-[10px] text-brand-400 hover:text-brand-300 font-bold">Salvar</button></div>
+<div class="bg-black/50 border border-zinc-800 rounded-xl p-3">
+<div class="flex gap-1 items-end h-12" id="timelineBars"></div>
+<div class="flex justify-between text-[9px] text-zinc-600 font-mono mt-1"><span>00:00</span><span>00:15</span><span>00:30</span><span>00:45</span></div>
+</div>
+<div class="flex flex-wrap gap-3 mt-3 text-[10px] text-zinc-500">
+<span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-brand-500/70"></span> A-Roll (falante)</span>
+<span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-500/70"></span> B-Roll inserido</span>
+<span class="flex items-center gap-1"><span class="w-2.5 h-2.5 rounded-sm bg-sky-500/70"></span> Legenda</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+</div>
+</div>
+
 <script>
-lucide.createIcons();
+/* ================= UTIL ================= */
+function toast(title,msg){const w=document.getElementById('toastWrap');const d=document.createElement('div');d.className='bg-zinc-900 border border-brand-500/30 rounded-xl px-4 py-3 shadow-2xl max-w-xs fade-in';d.innerHTML='<p class="text-xs font-bold text-white">'+title+'</p><p class="text-[11px] text-zinc-400 mt-0.5">'+msg+'</p>';w.appendChild(d);setTimeout(()=>{d.style.transition='.4s';d.style.opacity='0';d.style.transform='translateX(20px)';setTimeout(()=>d.remove(),400)},3200)}
+function esc(s){const d=document.createElement('div');d.innerText=s;return d.innerHTML}
+
+/* ================= NAV / PAGES ================= */
+function navTo(page,id){showPage(page);setTimeout(()=>document.getElementById(id)?.scrollIntoView({behavior:'smooth'}),120)}
+function showPage(p){document.querySelectorAll('.page').forEach(el=>el.classList.add('hidden'));const pg=document.getElementById('page-'+p);if(!pg)return;pg.classList.remove('hidden');const auth=p==='dash'||p==='studio';document.getElementById('navAuth').classList.toggle('hidden',auth);const nu=document.getElementById('navUser');nu.classList.toggle('hidden',!auth);nu.classList.toggle('flex',auth);window.scrollTo(0,0);lucide.createIcons()}
+function doLogin(){const e=(document.getElementById('loginEmail')?.value||'Criador').split('@')[0];document.getElementById('userName').innerText='Olá, '+e;showPage('dash');toast('✓ Bem-vindo!','Sua conta está pronta. 100 créditos adicionados.')}
+function logout(){showPage('home');toast('👋 Até logo','Sessão encerrada com segurança.')}
+
+/* ================= TABS STUDIO ================= */
+function switchTab(t){['clips','music','broll'].forEach(x=>{const b=document.getElementById('tab-'+x),m=document.getElementById('mod-'+x);if(b){b.classList.remove('tab-active');b.classList.add('text-zinc-400')}m.classList.toggle('hidden',x!==t)});const b=document.getElementById('tab-'+t);b.classList.add('tab-active');b.classList.remove('text-zinc-400');lucide.createIcons()}
+function openStudioTab(t){showPage('studio');switchTab(t)}
+
+/* ================= YOUTUBE PLAYER ================= */
 let P=null,tI=15,tF=45,playing=false,muted=false,loop=null;
-function eid(u){const m=u.match(/^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|\&v=)([^#\&\?]*).*/);return(m&&m[2].length===11)?m[2]:"kJQP7kiw5Fk"}
+let CLIPS=[
+ {n:1,i:15,f:45,s:'O SEGREDO É COMEÇAR AGORA!',sc:95,title:'Gancho de Alta Retenção'},
+ {n:2,i:60,f:90,s:'ESSA TÉCNICA MUDA TUDO!',sc:91,title:'Quebra de Padrão'},
+ {n:3,i:110,f:140,s:'NUNCA FAÇA ISSO NAS REDES!',sc:88,title:'Dica de Monetização'}
+];
+function eid(u){const m=String(u).match(/(?:youtu\.be\/|v=|embed\/|shorts\/)([A-Za-z0-9_-]{11})/);return m?m[1]:"kJQP7kiw5Fk"}
 function onYouTubeIframeAPIReady(){mkP("kJQP7kiw5Fk")}
-function mkP(id){document.getElementById('pBox').innerHTML='<div id="yt"></div>';P=new YT.Player('yt',{videoId:id,playerVars:{autoplay:1,controls:0,modestbranding:1,rel:0,playsinline:1,start:tI},events:{onReady:()=>{P.seekTo(tI);P.playVideo();startLoop()},onStateChange:e=>{playing=e.data===YT.PlayerState.PLAYING;document.getElementById('btnPlay').innerHTML=playing?'<i data-lucide="pause" class="w-3.5 h-3.5"></i> Pausar':'<i data-lucide="play" class="w-3.5 h-3.5"></i> Play';lucide.createIcons()}}})}
-function startLoop(){if(loop)clearInterval(loop);loop=setInterval(()=>{if(P&&P.getCurrentTime){const c=P.getCurrentTime();document.getElementById('tInfo').innerText=`${Math.floor(c)}s / ${tF}s`;if(c>=tF||c<tI)P.seekTo(tI)}},400)}
-function showPage(p){document.querySelectorAll('.page').forEach(el=>el.classList.add('hidden'));document.getElementById('page-'+p).classList.remove('hidden');const auth=p==='dash'||p==='studio';document.getElementById('navAuth').classList.toggle('hidden',auth);document.getElementById('navUser').classList.toggle('hidden',!auth);document.getElementById('navUser').classList.toggle('flex',auth);window.scrollTo(0,0);lucide.createIcons()}
-function doLogin(){showPage('dash')}
-function logout(){showPage('home')}
-function analisar(){const u=document.getElementById('ytUrl').value,id=eid(u);document.getElementById('loadBox').classList.remove('hidden');document.getElementById('loadMsg').innerText="Analisando ganchos com IA...";setTimeout(()=>{document.getElementById('loadMsg').innerText="Gerando enquadramento 9:16..."},700);setTimeout(()=>{document.getElementById('loadBox').classList.add('hidden');if(P&&P.loadVideoById)P.loadVideoById({videoId:id,startSeconds:tI});else mkP(id);trocar(15,45,'O SEGREDO É COMEÇAR AGORA!',95,1)},1400)}
-function trocar(i,f,s,sc,n){tI=i;tF=f;document.getElementById('subIn').value=s;document.getElementById('subLive').innerText='"'+s+'"';document.getElementById('cutLabel').innerText='Corte #'+n;document.getElementById('scoreBadge').innerText=sc+'/100 ⭐';[1,2,3].forEach(x=>{document.getElementById('c'+x).className=x===n?"p-2.5 bg-zinc-950 border-2 border-brand-500 rounded-xl flex justify-between items-center cursor-pointer":"p-2.5 bg-zinc-950 border border-zinc-800 rounded-xl flex justify-between items-center cursor-pointer"});if(P&&P.seekTo){P.seekTo(tI);P.playVideo()}}
+function mkP(id){const box=document.getElementById('pBox');if(!box)return;box.innerHTML='<div id="yt"></div>';P=new YT.Player('yt',{videoId:id,playerVars:{autoplay:1,controls:0,modestbranding:1,rel:0,playsinline:1,start:tI},events:{onReady:()=>{P.seekTo(tI);P.playVideo();startLoop()},onStateChange:e=>{playing=e.data===YT.PlayerState.PLAYING;const bp=document.getElementById('btnPlay');if(bp){bp.innerHTML=playing?'<i data-lucide="pause" class="w-3.5 h-3.5"></i> Pausar':'<i data-lucide="play" class="w-3.5 h-3.5"></i> Play';lucide.createIcons()}}}})}
+function startLoop(){if(loop)clearInterval(loop);loop=setInterval(()=>{if(P&&P.getCurrentTime){const c=P.getCurrentTime();const ti=document.getElementById('tInfo');if(ti)ti.innerText=fmt(c)+' / '+fmt(tF);if(c>=tF||c<tI-1)P.seekTo(tI)}},400)}
+function fmt(s){s=Math.max(0,Math.floor(s));return String(Math.floor(s/60)).padStart(2,'0')+':'+String(s%60).padStart(2,'0')}
 function togglePlay(){if(!P)return;if(playing)P.pauseVideo();else P.playVideo()}
 function reiniciar(){if(P){P.seekTo(tI);P.playVideo()}}
 function toggleMute(){if(!P)return;muted=!muted;if(muted)P.mute();else P.unMute();document.getElementById('btnMute').innerHTML=muted?'<i data-lucide="volume-x" class="w-3.5 h-3.5 text-red-400"></i>':'<i data-lucide="volume-2" class="w-3.5 h-3.5"></i>';lucide.createIcons()}
-function cam(p){const f=document.querySelector('.vp iframe');if(!f)return;if(p==='left')f.style.left='-100%';if(p==='center')f.style.left='-177%';if(p==='right')f.style.left='-255%'}
+function cam(p){const f=document.querySelector('#mod-clips .vp iframe');if(!f)return;if(p==='left')f.style.left='-8%';if(p==='center')f.style.left='-177%';if(p==='right')f.style.left='-346%'}
 function estilo(t){const e=document.getElementById('subLive');if(t==='h')e.className="bg-black/85 border border-yellow-400/80 text-yellow-300 font-black text-[11px] px-2 py-1 rounded-lg uppercase tracking-wider shadow inline-block";if(t==='c')e.className="bg-black/90 text-white font-bold text-[11px] px-2 py-1 rounded-md shadow inline-block";if(t==='n')e.className="bg-cyan-950 border border-cyan-400 text-cyan-300 font-black text-[11px] px-2 py-1 rounded-lg shadow inline-block"}
+
+/* ================= CLIPS LIST ================= */
+function renderClips(){const el=document.getElementById('clipList');if(!el)return;el.innerHTML=CLIPS.map(c=>'<div onclick="trocar('+c.i+','+c.f+',\''+c.s.replace(/'/g,"\\'")+'\','+c.sc+','+c.n+')" id="c'+c.n+'" class="p-2.5 bg-zinc-950 border '+(c.n===1?'border-2 border-brand-500':'border-zinc-800')+' rounded-xl flex justify-between items-center cursor-pointer hover:border-brand-500/50 transition"><div><h4 class="font-bold text-xs">'+c.n+'. '+esc(c.title)+'</h4><p class="text-[10px] text-zinc-400">'+fmt(c.i)+'–'+fmt(c.f)+' ('+(c.f-c.i)+'s)</p></div><span class="text-emerald-400 font-bold text-xs font-mono">'+c.sc+'</span></div>').join('')}
+function trocar(i,f,s,sc,n){tI=i;tF=f;document.getElementById('subIn').value=s;document.getElementById('subLive').innerText='"'+s+'"';document.getElementById('cutLabel').innerText='Corte #'+n;document.getElementById('scoreBadge').innerText=sc+'/100 ⭐';CLIPS.forEach(c=>{const el=document.getElementById('c'+c.n);if(el)el.className='p-2.5 bg-zinc-950 border '+(c.n===n?'border-2 border-brand-500':'border-zinc-800')+' rounded-xl flex justify-between items-center cursor-pointer hover:border-brand-500/50 transition'});if(P&&P.seekTo){P.seekTo(tI);P.playVideo()}}
+
+/* ================= ANALISAR ================= */
+function analisar(){const u=document.getElementById('ytUrl').value,id=eid(u);const box=document.getElementById('loadBox'),msg=document.getElementById('loadMsg');box.classList.remove('hidden');msg.innerText="Transcrevendo áudio com IA...";setTimeout(()=>msg.innerText="Detectando ganchos e viralScore...",700);setTimeout(()=>msg.innerText="Gerando enquadramento 9:16 + legendas...",1400);setTimeout(()=>msg.innerText="Procurando B-Roll e trilha sonora...",2100);setTimeout(()=>{box.classList.add('hidden');if(P&&P.loadVideoById)P.loadVideoById({videoId:id,startSeconds:tI});else mkP(id);trocar(CLIPS[0].i,CLIPS[0].f,CLIPS[0].s,CLIPS[0].sc,1);toast('✓ Análise concluída!','3 cortes virais, 6 pontos de B-Roll e 1 trilha sugerida.')},2600)}
+function baixarCorte(){toast('🎉 Corte 9:16 salvo!','Download iniciado (1080×1920 · HD · sem marca d\'água).')}
+
+/* ================= AI MUSIC ================= */
+let musicType='music',tracks=[],audioBusy=false;
+function setMusicType(t){musicType=t;document.getElementById('musicFields').classList.toggle('hidden',t!=='music');document.getElementById('sfxFields').classList.toggle('hidden',t!=='sfx');const a=document.getElementById('mtMusic'),b=document.getElementById('mtSfx');if(t==='music'){a.classList.add('tab-active');b.classList.remove('tab-active');b.classList.add('text-zinc-400')}else{b.classList.add('tab-active');a.classList.remove('tab-active');a.classList.add('text-zinc-400')}}
+function pickChip(btn,group){document.querySelectorAll('#'+btn.parentElement.id+' .chip').forEach(c=>c.classList.remove('on'));btn.classList.add('on')}
+function chipVal(id){const c=document.querySelector('#'+id+' .chip.on');return c?c.innerText:'—'}
+function waveBars(n,seed){let h='';let x=seed;for(let i=0;i<n;i++){x=(x*9301+49297)%233280;const v=18+Math.round((x/233280)*80);h+='<i style="height:'+v+'%"></i>'}return h}
+function gerarAudio(){if(audioBusy)return;audioBusy=true;const btn=document.getElementById('btnAudio');btn.disabled=true;btn.classList.add('opacity-60');const prog=document.getElementById('audioProgress'),msg=document.getElementById('audioMsg');prog.classList.remove('hidden');const steps=musicType==='music'?['Analisando prompt e referências...','Compondo melodia e harmonia...','Sintetizando instrumentos 44.1kHz...','Mixando e masterizando...']:['Desenhando envelope do efeito...','Sintetizando camadas de ruído...','Aplicando reverb e espaço...','Masterizando SFX...'];let i=0;msg.innerText=steps[0];const t=setInterval(()=>{i++;if(i<steps.length)msg.innerText=steps[i];if(i>=steps.length){clearInterval(t);prog.classList.add('hidden');btn.disabled=false;btn.classList.remove('opacity-60');audioBusy=false;if(musicType==='music')addTrack();else addSfxTrack()}},750)}
+function addTrack(){const g=chipVal('genreChips'),m=chipVal('moodChips'),d=chipVal('durChips');const p=(document.getElementById('musicPrompt').value||'trilha IA').slice(0,60);const names=['NightDrive','VelvetHook','NeonPulse','SoftLaunch','GoldenHour','DeepFocus'];const name=names[tracks.length%names.length]+'_'+String(tracks.length+1).padStart(2,'0');tracks.push({name,g,m,d,p});renderTracks();toast('🎵 Trilha gerada!','"'+name+' — '+g+', '+m+'" pronta para usar (livre de royalties).')}
+function addSfxTrack(){const s=chipVal('sfxChips');const name=s.replace(/\s+/g,'')+'_SFX';tracks.push({name,g:'Sound Design',m:s,d:'~2s',p:document.getElementById('sfxPrompt').value||s});renderTracks();toast('🔊 SFX gerado!','"'+name+'" adicionado à biblioteca.')}
+function renderTracks(){const el=document.getElementById('trackList');document.getElementById('trackCount').innerText=tracks.length+(tracks.length===1?' faixa':' faixas');if(!tracks.length)return;el.innerHTML=tracks.map((t,i)=>'<div class="bg-zinc-950 border border-zinc-800 rounded-xl p-3 flex items-center gap-3"><button onclick="playTrack(this)" class="w-9 h-9 shrink-0 bg-brand-600 hover:bg-brand-500 rounded-full flex items-center justify-center text-white shadow active:scale-95"><i data-lucide="play" class="w-3.5 h-3.5"></i></button><div class="min-w-0 flex-1"><div class="flex items-center justify-between gap-2"><h4 class="font-bold text-xs truncate">'+esc(t.name)+'</h4><span class="text-[9px] text-zinc-500 font-mono shrink-0">'+esc(t.d)+'</span></div><p class="text-[10px] text-zinc-400 truncate">'+esc(t.g)+' · '+esc(t.m)+' · '+esc(t.p)+'</p><div class="wave mt-1" style="height:22px">'+waveBars(48,i*17+7)+'</div></div><button onclick="toast(\'📥 Download\',\''+esc(t.name)+'.wav salvo.\')" class="p-2 bg-zinc-900 border border-zinc-800 rounded-lg text-zinc-400 hover:text-white shrink-0"><i data-lucide="download" class="w-3.5 h-3.5"></i></button></div>').join('');lucide.createIcons()}
+function playTrack(b){const ic=b.querySelector('svg');const playing=b.dataset.p==='1';b.dataset.p=playing?'0':'1';b.innerHTML=playing?'<i data-lucide="play" class="w-3.5 h-3.5"></i>':'<i data-lucide="pause" class="w-3.5 h-3.5"></i>';lucide.createIcons()}
+function quickSfx(name){toast('🔊 '+name+' gerado!','Efeito adicionado à biblioteca do projeto.')}
+function openMusic(){openStudioTab('music')}
+
+/* ================= AI B-ROLL ================= */
+let brollSrc='stock',brollDone=false,inserted=new Set();
+const LINES=[
+ {t:'00:12',txt:'"Os negócios estão mudando mais rápido que nunca..."',sug:'Pessoa digitando em laptop · escritório moderno',th:'thumb-1',sc:96},
+ {t:'00:18',txt:'"A inteligência artificial acelera tudo..."',sug:'Fluxo de dados abstrato · núcleo digital 4K',th:'thumb-2',sc:94},
+ {t:'00:26',txt:'"Quem não automatiza, fica para trás..."',sug:'Relógio acelerando · prazo apertado',th:'thumb-3',sc:92},
+ {t:'00:34',txt:'"Time criativo fechando contrato..."',sug:'Aperto de mãos · sucesso em reunião',th:'thumb-4',sc:91},
+ {t:'00:41',txt:'"O futuro pertence aos criadores..."',sug:'Criador filmando com ring light',th:'thumb-5',sc:95},
+ {t:'00:49',txt:'"Comece hoje mesmo a publicar..."',sug:'Celular postando Reels · notificações',th:'thumb-6',sc:93}
+];
+function setBrollSrc(s){brollSrc=s;document.getElementById('srcStock').classList.toggle('tab-active',s==='stock');document.getElementById('srcStock').classList.toggle('text-zinc-400',s!=='stock');document.getElementById('srcAi').classList.toggle('tab-active',s==='ai');document.getElementById('srcAi').classList.toggle('text-zinc-400',s!=='ai')}
+function analiseBroll(){const btn=document.getElementById('btnBroll');btn.disabled=true;btn.innerHTML='<i data-lucide="loader-2" class="w-3.5 h-3.5 animate-spin"></i> Analisando...';lucide.createIcons();setTimeout(()=>{brollDone=true;document.getElementById('brollMsg').classList.remove('hidden');btn.disabled=false;btn.innerHTML='<i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i> Reanalisar transcrição';renderTranscript();renderBroll();renderTimeline();toast('🎞️ B-Roll encontrado!','6 momentos com sugestões prontas para inserir.')},1300)}
+function renderTranscript(){const el=document.getElementById('transcript');el.innerHTML=LINES.map((l,i)=>'<div class="bg-black/40 border border-zinc-800 rounded-lg px-2.5 py-1.5 flex gap-2 items-start"><span class="text-[9px] font-mono text-zinc-600 shrink-0 mt-0.5">'+l.t+'</span><p class="text-[11px] text-zinc-300 leading-snug">'+esc(l.txt)+'</p></div>').join('')}
+function renderBroll(){const el=document.getElementById('brollList');if(!brollDone){el.innerHTML='<p class="text-xs text-zinc-500 text-center py-6">Analise a transcrição para ver as sugestões de B-Roll.</p>';return}el.innerHTML=LINES.map((l,i)=>{const ins=inserted.has(i);const label=brollSrc==='ai'?'✨ IA: '+l.sug:'📦 Stock: '+l.sug;return '<div class="bg-zinc-950 border '+(ins?'border-emerald-500/50':'border-zinc-800')+' rounded-xl p-2.5 flex items-center gap-3 transition"><div class="thumb '+l.th+' w-16 h-10 rounded-lg shrink-0"></div><div class="min-w-0 flex-1"><p class="text-[9px] text-zinc-500 font-mono">'+l.t+' · match <span class="text-emerald-400 font-bold">'+l.sc+'%</span></p><p class="text-xs font-semibold truncate">'+esc(label)+'</p></div>'+(ins?'<span class="text-[9px] bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 font-bold px-2 py-1 rounded-full shrink-0">Na timeline</span>':'<div class="flex gap-1 shrink-0"><button onclick="insertBroll('+i+')" class="text-[9px] bg-brand-600 hover:bg-brand-500 text-white font-bold px-2.5 py-1.5 rounded-lg">Inserir</button><button onclick="swapBroll('+i+')" class="text-[9px] bg-zinc-900 border border-zinc-800 text-zinc-300 font-bold px-2 py-1.5 rounded-lg" title="Trocar">↻</button></div>')+'</div>'}).join('');document.getElementById('brollProgress').innerText=inserted.size+'/'+LINES.length+' inseridos'}
+function insertBroll(i){inserted.add(i);renderBroll();renderTimeline();toast('✓ B-Roll inserido','Clipe posicionado em '+LINES[i].t+' da timeline.')}
+function swapBroll(i){LINES[i].sc=Math.min(99,LINES[i].sc+2);const alts=['Time comemorando · escritório','Drone sobre cidade à noite','Mãos desenhando fluxograma','Close em olho refletindo telas','Código em tela · neon','Aperto de mãos de parceria'];LINES[i].sug=alts[Math.floor(Math.random()*alts.length)];LINES[i].th='thumb-'+(1+Math.floor(Math.random()*6));renderBroll();toast('↻ Sugestão trocada','Nova opção com '+LINES[i].sc+'% de match.')}
+function renderTimeline(){const el=document.getElementById('timelineBars');if(!el)return;let h='';for(let i=0;i<45;i++){const sec=i;let cls='bg-brand-500/60';if(inserted.size&&LINES.some((l,idx)=>inserted.has(idx)&&Math.abs((parseInt(l.t.slice(0,2))*60+parseInt(l.t.slice(3)))+ (idx*3) - sec)<2))cls='bg-emerald-500/80';if(i%7===3)cls+=' ring-1 ring-sky-400/40';h+='<span class="flex-1 rounded-sm '+cls+'" style="height:'+(30+((i*37)%70))+'%"></span>'}el.innerHTML=h}
+
+/* ================= HOME WAVE DEMO ================= */
+function homeWave(){const el=document.getElementById('homeWave');if(el)el.innerHTML=waveBars(56,99)}
+
+/* ================= INIT ================= */
+document.addEventListener('DOMContentLoaded',()=>{lucide.createIcons();renderClips();renderTranscript();renderBroll();renderTimeline();homeWave();if(window.YT&&window.YT.Player)onYouTubeIframeAPIReady()});
+if(window.YT&&window.YT.Player){/* player já pronto */}
 </script>
 </body>
-                                                                                                                                           </html>
+</html>
